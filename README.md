@@ -1,1 +1,1 @@
-# goblog
+# ginblog
