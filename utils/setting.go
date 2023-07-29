@@ -8,6 +8,7 @@ import (
 var (
 	AppMode  string
 	HttpPort string
+	JwtKey   string
 
 	Db         string
 	DbHost     string
@@ -29,6 +30,8 @@ func init() {
 func LoadServer(file *ini.File) {
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	HttpPort = file.Section("server").Key("HttpPort").MustString(":3000")
+	JwtKey = file.Section("server").Key("JwtKey").MustString("78js10js21")
+
 }
 
 func LoadData(file *ini.File) {
