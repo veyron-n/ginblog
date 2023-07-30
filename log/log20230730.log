@@ -21,3 +21,7 @@ time="2023-07-30 13:04:59" level=info Agen=PostmanRuntime/7.32.3 DataSize=66 Hos
 time="2023-07-30 13:09:40" level=info Agen=PostmanRuntime/7.32.3 DataSize=67 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="1 ms" Status=200
 time="2023-07-30 13:09:48" level=info Agen=PostmanRuntime/7.32.3 DataSize=64 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="1 ms" Status=200
 time="2023-07-30 13:09:53" level=info Agen=PostmanRuntime/7.32.3 DataSize=55 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="1 ms" Status=200
+time="2023-07-30 14:46:38" level=info Agen=PostmanRuntime/7.32.3 DataSize=55 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="2 ms" Status=200
+time="2023-07-30 14:47:29" level=info Agen=PostmanRuntime/7.32.3 DataSize=1246 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=GET Path="/api/v1/articles?pageSize=5&pageNum=1" SpendTime="11 ms" Status=200
+time="2023-07-30 14:47:47" level=info Agen=PostmanRuntime/7.32.3 DataSize=212 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=GET Path="/api/v1/users?pageSize=5&pageNum=1" SpendTime="14 ms" Status=200
+time="2023-07-30 14:47:59" level=info Agen=PostmanRuntime/7.32.3 DataSize=123 HostName=DESKTOP-RGU2TC6 IP=127.0.0.1 Method=GET Path="/api/v1/categorys?pageSize=5&pageNum=1" SpendTime="13 ms" Status=200

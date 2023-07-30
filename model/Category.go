@@ -58,11 +58,12 @@ func EditCategory(id int, data *Category) int {
 }
 
 // GetCategorys 查询分类列表
-func GetCategorys(pageSize int, pageNum int) []Category {
+func GetCategorys(pageSize int, pageNum int) ([]Category, int) {
 	var categorys []Category
-	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&categorys).Error
+	var total int
+	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&categorys).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+		return nil, 0
 	}
-	return categorys
+	return categorys, total
 }
