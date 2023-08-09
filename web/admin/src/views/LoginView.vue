@@ -15,7 +15,9 @@
         </el-form-item>
 
         <el-form-item prop="password">
-          <el-input v-model="formData.password" type="password" placeholder="请输入密码" show-password>
+          <el-input v-model="formData.password"
+                    type="password" placeholder="请输入密码" show-password
+                    v-on:keyup.enter='login'>
             <template #prefix>
               <el-icon class="el-icon--left">
                 <Lock />
@@ -62,8 +64,8 @@ export default {
         if (!valid) return this.$message.error("输入非法数据请重新输入")
         const { data: res } = await this.$http.post("login", this.formData)
         if (res.status !== 200) return this.$message.error(res.message)
-        window.localStorage.getItem('token', res.token)
-        this.$router.push('admin')
+        window.localStorage.setItem('token', res.token)
+        this.$router.push('admin/index')
         this.$message.success('登录成功')
       })
     },
