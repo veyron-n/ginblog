@@ -8,6 +8,7 @@
   text-align: center;
 }
 .footer span{
+  color: #545c64;
   font-size: 18px;
 }
 </style>

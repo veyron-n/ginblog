@@ -3,7 +3,7 @@
     <el-row>
       <el-col>
         <div class='log'>
-          <span>My Blog</span>
+          <span>GinBlog</span>
         </div>
         <el-menu
           active-text-color="#ffd04b"
@@ -78,6 +78,7 @@ export default {
 .log {
   height: 32px;
   margin: 16px;
+  color: #ffd04b;
   background-color: #545c64;
   display: flex;
   justify-content: center;
