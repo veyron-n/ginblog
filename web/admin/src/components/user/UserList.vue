@@ -2,18 +2,17 @@
   <div>
     <div>
       <div class='input-container'>
-        <el-input style='width: 200px' size='default' v-model='username' placeholder='请输入用户名' clearable
-                  @clear='clearInput'>
+        <el-input style='width: 200px' size='default' v-model='username' placeholder='请输入用户名' clearable @clear='clearInput'>
           <template #prefix>
             <el-icon class='el-icon--left'>
               <Search />
             </el-icon>
           </template>
         </el-input>
-        <el-button style='margin-left: 5px' size='default' type='primary' @click='search'>搜索</el-button>
-        <el-button style='margin-left: 5px' size='default' type='success' @click='dialogFormVisible = true'>添加用户
+        <el-button style='margin-left: 5px' size='default' type='primary' @click='getUserList'>搜索</el-button>
+        <el-button style='margin-left: 5px' size='default' type='success' @click='dialogVisible = true'>添加用户
         </el-button>
-        <el-dialog style='width: 500px; height: 350px' v-model='dialogFormVisible' title='添加用户'>
+        <el-dialog style='width: 500px; height: 500px' v-model='dialogVisible' title='添加用户'>
           <el-form ref="openUserForm" :model="dialog.openUser.form" :rules="dialog.openUser.formRules"
                    label-width="100px">
             <el-form-item label='登录账号' prop='account'>
@@ -47,11 +46,9 @@
             </el-form-item>
           </el-form>
           <template #footer>
-            <span class='dialog-footer'>
-              <el-button @click='dialogFormVisible = false'>取消</el-button>
-              <el-button type='primary' @click='dialogFormVisible = false'>
-                提交
-              </el-button>
+            <span class="dialog-footer">
+              <el-button @click="dialogVisible = false">取消</el-button>
+              <el-button type="primary" @click="dialogVisible = false">确定</el-button>
             </span>
           </template>
         </el-dialog>
@@ -59,7 +56,7 @@
       <el-table
         style='margin-top: 5px;width: 100%'
         height='73vh'
-        :row-style="{height:'20px'}"
+        :row-style="{height:'40px'}"
         :cell-style="{padding:'0px'}"
         border
         :data='pageData'
@@ -67,16 +64,37 @@
         <el-table-column fixed='left' type='selection' align='center' width='40' />
         <el-table-column fixed='left' :show-overflow-tooltip=true prop='username' label='用户名' align='center'
                          width='330' />
-        <el-table-column prop='role' label='角色' align='center' width='200' />
+        <el-table-column prop='role' label='角色' align='center' width='200' :formatter='handleRole'/>
         <el-table-column prop='CreatedAt' sortable label='创建时间' align='center' width='330'
                          :formatter='formatTimestamp' />
         <el-table-column prop='UpdatedAt' sortable label='修改时间' align='center' width='330'
                          :formatter='formatTimestamp' />
-        <el-table-column label='操作' align='center' width='350' />
+        <el-table-column label='操作' align='center' width='350'>
+          <el-button type="primary" circle plain>
+            <el-icon>
+              <Edit />
+            </el-icon>
+          </el-button>
+
+          <el-popconfirm
+            width="220"
+            confirm-button-text="好的"
+            cancel-button-text="不用了"
+            title="这是一段内容确定删除吗？"
+          >
+            <template #reference>
+              <el-button type="danger" circle plain>
+                <el-icon>
+                  <Delete />
+                </el-icon>
+              </el-button>
+            </template>
+          </el-popconfirm>
+        </el-table-column>
       </el-table>
     </div>
     <div class='pagination-container'>
-      <el-pagination
+      <el-pagination class='pagination-wrapper'
         @size-change='pageSizeChange'
         @current-change='pageCurrentChange'
         :current-page='page.current'
@@ -91,7 +109,6 @@
 </template>
 <script>
 import { User, Lock, Search } from '@element-plus/icons-vue'
-import { isNull } from '@/utils/service'
 
 export default {
   name: 'LoginView',
@@ -109,8 +126,7 @@ export default {
   data() {
     return {
       username: '',
-      dialogTableVisible: false,
-      dialogFormVisible: false,
+      dialogVisible: false,
       dialog: {
         openUser: {
           /*表单*/
@@ -119,11 +135,9 @@ export default {
             pwd: '',
             rid: undefined,
             roles: [
-              { id: 1, roleName: 'role_1' },
-              { id: 2, roleName: 'role_2' },
-              { id: 3, roleName: 'role_3' },
-              { id: 4, roleName: 'role_4' },
-              { id: 5, roleName: 'role_5' }
+              { id: 1, roleName: '管理者' },
+              { id: 2, roleName: '订阅者' },
+              { id: 3, roleName: '...' },
             ],
           },
           /*表单验证*/
@@ -153,6 +167,31 @@ export default {
     }
   },
   methods: {
+    handleRole(row, column, cellValue) {
+      let roleStr;
+      if(cellValue === 1) {
+        roleStr = '管理者'
+      } else if (cellValue === 2) {
+        roleStr = '订阅者'
+      } else {
+        roleStr = '-'
+      }
+      return roleStr
+    },
+    async getUserList() {
+      const res = await this.$http.get('users', {
+        params: {
+          username: this.username,
+          pageSize: this.page.size,
+          pageNum: this.page.current
+        }
+      })
+      this.userInfo = res.data.data
+    },
+    clearInput() {
+      this.username = ''
+      this.getUserList()
+    },
     pageSizeChange(v) {
       this.page.size = v
     },
@@ -169,25 +208,7 @@ export default {
       const minutes = dateObject.getMinutes().toString().padStart(2, '0')
       const seconds = dateObject.getSeconds().toString().padStart(2, '0')
       return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`
-    },
-    async getUserList() {
-      const res = await this.$http.get('users', {
-        params: {
-          pageSize: this.page.size,
-          pageNum: this.page.current
-        }
-      })
-      this.userInfo = res.data.data
-    },
-    search() {
-      if (isNull(this.username)) {
-        this.$message.warning('请输入用户名')
-      }
-    },
-    clearInput() {
-      console.log('clearInput...')
     }
-  }
 }
 </script>
 <style>
@@ -196,10 +217,20 @@ export default {
   align-items: center;
 }
 
-.pagination-container {
+.dialog-footer {
+  margin-top: 165px;
+  margin-right: 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  justify-content: flex-end; /* 按钮右对齐 */
+}
+
+.pagination-container {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column-reverse; /* 设置为从下往上的弹性容器 */
+}
+
+.pagination-wrapper {
+  align-self: flex-end; /* 对齐到底部 */
 }
 </style>
