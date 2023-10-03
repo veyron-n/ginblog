@@ -54,6 +54,7 @@
         </el-dialog>
       </div>
       <el-table
+        ref="myTb"
         style='margin-top: 5px;width: 100%'
         height='73vh'
         :row-style="{height:'40px'}"
@@ -69,7 +70,7 @@
                          :formatter='formatTimestamp' />
         <el-table-column prop='UpdatedAt' sortable label='修改时间' align='center' width='330'
                          :formatter='formatTimestamp' />
-        <el-table-column label='操作' align='center' width='350'>
+        <el-table-column label='操作' align='center'>
           <el-button type="primary" circle plain>
             <el-icon>
               <Edit />
@@ -80,7 +81,7 @@
             width="220"
             confirm-button-text="好的"
             cancel-button-text="不用了"
-            title="这是一段内容确定删除吗？"
+            title="确定删除吗？"
           >
             <template #reference>
               <el-button type="danger" circle plain>
@@ -94,17 +95,18 @@
       </el-table>
     </div>
     <div class='pagination-container'>
-      <el-pagination class='pagination-wrapper'
+      <el-pagination
+        background
+        layout='total, sizes, prev, pager, next, jumper'
         @size-change='pageSizeChange'
         @current-change='pageCurrentChange'
-        :current-page='page.current'
+        :total=userInfo.length
         :page-sizes='[10, 30, 50, 100, 200, 300]'
         :page-size=page.size
-        layout='total, sizes, prev, pager, next, jumper'
-        :total=userInfo.length>
+        :current-page='page.current'
+        >
       </el-pagination>
     </div>
-
   </div>
 </template>
 <script>
@@ -169,7 +171,7 @@ export default {
   methods: {
     handleRole(row, column, cellValue) {
       let roleStr;
-      if(cellValue === 1) {
+      if (cellValue === 1) {
         roleStr = '管理者'
       } else if (cellValue === 2) {
         roleStr = '订阅者'
@@ -209,6 +211,7 @@ export default {
       const seconds = dateObject.getSeconds().toString().padStart(2, '0')
       return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`
     }
+  }
 }
 </script>
 <style>
@@ -230,7 +233,5 @@ export default {
   flex-direction: column-reverse; /* 设置为从下往上的弹性容器 */
 }
 
-.pagination-wrapper {
-  align-self: flex-end; /* 对齐到底部 */
-}
+
 </style>

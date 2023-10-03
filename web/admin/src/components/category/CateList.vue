@@ -83,7 +83,7 @@
             width="220"
             confirm-button-text="好的"
             cancel-button-text="不用了"
-            title="这是一段内容确定删除吗？"
+            title="确定删除吗？"
           >
             <template #reference>
               <el-button type="danger" circle plain>
@@ -96,15 +96,16 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class='pagination-container'>
-      <el-pagination class='pagination-wrapper'
-                     @size-change='pageSizeChange'
-                     @current-change='pageCurrentChange'
-                     :current-page='page.current'
-                     :page-sizes='[10, 30, 50, 100, 200, 300]'
-                     :page-size=page.size
-                     layout='total, sizes, prev, pager, next, jumper'
-                     :total=userInfo.length>
+    <div>
+      <el-pagination
+        background
+        @size-change='pageSizeChange'
+        @current-change='pageCurrentChange'
+        :current-page='page.current'
+        :page-sizes='[10, 30, 50, 100, 200, 300]'
+        :page-size=page.size
+        layout='total, sizes, prev, pager, next, jumper'
+        :total=userInfo.length>
       </el-pagination>
     </div>
 
@@ -234,13 +235,5 @@ export default {
   justify-content: flex-end; /* 按钮右对齐 */
 }
 
-.pagination-container {
-  margin-top: 22px;
-  display: flex;
-  flex-direction: column-reverse; /* 设置为从下往上的弹性容器 */
-}
 
-.pagination-wrapper {
-  align-self: flex-end; /* 对齐到底部 */
-}
 </style>

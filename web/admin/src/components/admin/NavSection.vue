@@ -2,15 +2,14 @@
   <el-aside class='nav'>
     <el-row>
       <el-col>
-        <div class='log'>
+        <div class='logo'>
           <span>GinBlog</span>
         </div>
         <el-menu
-          active-text-color="#ffd04b"
-          background-color="#545c64"
+          background-color="#fff"
           class="el-menu-vertical-demo"
           default-active="2"
-          text-color="#fff"
+          text-color="#545C64"
           @open="handleOpen"
           @close="handleClose"
           router
@@ -69,17 +68,17 @@ export default {
 
 <style>
 .nav{
-  background-color: #545c64;
+  width: 200px;
+  background-color: #ffffff;
   text-align: center;
 }
 .nav span{
-  font-size: 18px;
+  font-size: 14px;
 }
-.log {
-  height: 32px;
+.logo{
   margin: 16px;
-  color: #ffd04b;
-  background-color: #545c64;
+  color: #545C64;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;

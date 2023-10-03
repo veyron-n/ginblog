@@ -1,6 +1,6 @@
 <template>
   <div class='footer'>
-    <span> ----- GinBlog ----- </span>
+    <span> GinBlog :)</span>
   </div>
 </template>
 <style>
@@ -9,6 +9,6 @@
 }
 .footer span{
   color: #545c64;
-  font-size: 18px;
+  font-size: 15px;
 }
 </style>
