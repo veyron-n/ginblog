@@ -1,5 +1,5 @@
 # postman_json文件
-`{
+```{
 	"info": {
 		"_postman_id": "318317f2-ecbb-4a20-a28f-03db804ab3be",
 		"name": "ginblog",
@@ -726,4 +726,4 @@
 			]
 		}
 	]
-}`
+}```
